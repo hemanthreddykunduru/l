@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register & Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="firebaseauth.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            width: 350px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 26px;
+            color: #ffd700;
+            text-transform: uppercase;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 12px;
+            left: 10px;
+            color: #ffd700;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: none;
+            border-radius: 8px;
+            background: #444;
+            color: #fff;
+            font-size: 16px;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            background: #555;
+            box-shadow: 0 0 5px #ffd700;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #ffd700;
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #ffe135;
+            transform: translateY(-2px);
+        }
+
+        .recover a {
+            color: #ffd700;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .recover a:hover {
+            text-decoration: underline;
+        }
+
+        .messageDiv {
+            background: #ffd700;
+            color: #000;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .or {
+            text-align: center;
+            color: #ffd700;
+            margin: 15px 0;
+        }
+
+        .icons {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .icons i {
+            font-size: 24px;
+            margin: 0 10px;
+            color: #ffd700;
+            cursor: pointer;
+        }
+
+        .icons i:hover {
+            color: #ffe135;
+        }
+
+        .input-group input::placeholder {
+            color: #bbbbbb;
+            opacity: 1;
+            font-size: 16px;
+        }
+
+        .input-group input:focus::placeholder {
+            color: #ffd700;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="signup" style="display:none;">
+        <h1 class="form-title">Register</h1>
+        <form id="signupForm">
+            <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="fName" placeholder="First Name" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="lName" placeholder="Last Name" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="rEmail" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="rPassword" placeholder="Password" required>
+            </div>
+            <button class="btn" id="submitSignUp">Sign Up</button>
+            <button class="btn" id="signInButton">Sign In</button>
+        </form>
+    </div>
+
+    <div class="container" id="signIn">
+        <h1 class="form-title">Sign In</h1>
+        <form id="signinForm">
+            <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button class="btn" id="submitSignIn">Sign In</button>
+            <button class="btn" id="signUpButton">Sign Up</button>
+            <div class="recover">
+                <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('submitSignUp').addEventListener('click', function(e) {
+            e.preventDefault();
+            const fName = document.getElementById('fName').value;
+            const lName = document.getElementById('lName').value;
+            const email = document.getElementById('rEmail').value;
+            const password = document.getElementById('rPassword').value;
+
+        });
+        document.getElementById('submitSignIn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+        });
+
+        document.getElementById('signInButton').addEventListener('click', function() {
+            document.getElementById('signup').style.display = 'none';
+            document.getElementById('signIn').style.display = 'block';
+        });
+
+        document.getElementById('signUpButton').addEventListener('click', function() {
+            document.getElementById('signup').style.display = 'block';
+            document.getElementById('signIn').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
